@@ -16,15 +16,15 @@ import requests
 from pathlib import Path
 from tqdm import tqdm
 import chromadb
-from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
+from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
-CHROMA_HOST    = os.getenv("CHROMA_HOST", "localhost")
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
-BATCH_SIZE     = 100
-COLLECTION     = "restaurant_reviews"
-CHUNKED_FILE   = Path("data/chunked_reviews.jsonl")
-RESTAURANTS    = Path("data/restaurants.jsonl")
-BACKEND_URL    = os.getenv("BACKEND_URL", "http://localhost:8080")
+CHROMA_HOST  = os.getenv("CHROMA_HOST", "localhost")
+OLLAMA_URL   = os.getenv("OLLAMA_URL", "http://localhost:11434")
+BATCH_SIZE   = 50    # Ollama embedding 本地推理，batch 小一点更稳
+COLLECTION   = "restaurant_reviews"
+CHUNKED_FILE = Path("data/chunked_reviews.jsonl")
+RESTAURANTS  = Path("data/restaurants.jsonl")
+BACKEND_URL  = os.getenv("BACKEND_URL", "http://localhost:8080")
 
 
 def ingest_restaurants():
@@ -42,9 +42,9 @@ def ingest_restaurants():
 
 def ingest_reviews():
     client = chromadb.HttpClient(host=CHROMA_HOST, port=8000)
-    embed_fn = OpenAIEmbeddingFunction(
-        api_key=OPENAI_API_KEY,
-        model_name="text-embedding-3-small"
+    embed_fn = OllamaEmbeddingFunction(
+        url=f"{OLLAMA_URL}/api/embeddings",
+        model_name="nomic-embed-text"
     )
     collection = client.get_or_create_collection(
         name=COLLECTION,

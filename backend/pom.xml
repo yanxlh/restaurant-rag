@@ -57,10 +57,10 @@
       <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 
-    <!-- Spring AI: OpenAI + ChromaDB (Spring AI 1.0.0 GA artifact naming) -->
+    <!-- Spring AI: Ollama + ChromaDB (免费本地方案) -->
     <dependency>
       <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-starter-model-openai</artifactId>
+      <artifactId>spring-ai-starter-model-ollama</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
