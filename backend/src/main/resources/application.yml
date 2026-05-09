@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: restaurant-rag
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/restaurant_rag}
+    username: root
+    password: ${MYSQL_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: false
+
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: 6379
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o
+      embedding:
+        options:
+          model: text-embedding-3-small
+    vectorstore:
+      chroma:
+        client:
+          host: http://${CHROMA_HOST:localhost}
+          port: 8000
+        collection-name: restaurant_reviews
+        initialize-schema: true
+
+server:
+  port: 8080
