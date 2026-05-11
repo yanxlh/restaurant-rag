@@ -40,6 +40,14 @@
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
 
+    <!-- Apache HttpClient 5: forces HttpComponentsClientHttpRequestFactory for RestClient.
+         Fixes body-empty bug when RestClient is called from Reactor Netty event-loop threads
+         (Spring AI's ChromaApi uses sync RestClient in WebFlux context). -->
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+    </dependency>
+
     <!-- JPA + MySQL -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

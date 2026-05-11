@@ -41,7 +41,10 @@ def ingest_restaurants():
 
 
 def ingest_reviews():
-    client = chromadb.HttpClient(host=CHROMA_HOST, port=8000)
+    client = chromadb.HttpClient(
+        host=CHROMA_HOST, port=8000,
+        tenant="SpringAiTenant", database="SpringAiDatabase"
+    )
     embed_fn = OllamaEmbeddingFunction(
         url=f"{OLLAMA_URL}/api/embeddings",
         model_name="nomic-embed-text"
